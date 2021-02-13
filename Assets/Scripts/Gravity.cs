@@ -11,7 +11,10 @@ public class Gravity : MomentumModifier
     public override E_MomentumAxis GetMomentumAxis() { return E_MomentumAxis.Vertical; }
     public override void Apply(ref Vector3 momentum)
     {
-        momentum -= controller.transform.up * gravity * Time.fixedDeltaTime;
+        if (controller.IsGrounded())
+            momentum = Vector3.zero;
+        else
+            momentum -= controller.transform.up * gravity * Time.fixedDeltaTime;
     }
 
     void Start()

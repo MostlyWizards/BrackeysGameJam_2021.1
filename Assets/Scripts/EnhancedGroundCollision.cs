@@ -8,6 +8,20 @@ public class EnhancedGroundCollision : MonoBehaviour
     new Collider collider;
     bool isGrounded;
 
-    void Start() {}
-    void FixedUpdate() {}
+
+    // Internal
+    float castLenght;
+
+    void Start() {
+        collider = GetComponent<Collider>();
+        castLenght = collider.bounds.max.y - collider.bounds.min.y / 2 + 0.0001f;
+    }
+
+    void FixedUpdate() {
+
+        RaycastHit _hit;
+		isGrounded = Physics.Raycast(collider.bounds.center, -collider.transform.up, out _hit, castLenght);
+    }
+
+    public bool IsGrounded() { return isGrounded; }
 }

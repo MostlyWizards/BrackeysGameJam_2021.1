@@ -8,7 +8,7 @@ public class EnhancedPhysicController : MonoBehaviour
 {
     // Components required
     new Rigidbody rigidbody;
-
+    EnhancedGroundCollision groundChecker;
 
     // Internal
     Vector3 horizontalMomentum;
@@ -23,8 +23,9 @@ public class EnhancedPhysicController : MonoBehaviour
 
     void Start()
     {
-        velocity = new Vector3(7,0,7);
+        //velocity = new Vector3(7,0,7);
         rigidbody = GetComponent<Rigidbody>();
+        groundChecker = GetComponent<EnhancedGroundCollision>();
 
         SetupRequiredComponents();
         LoadModifiers();
@@ -42,7 +43,7 @@ public class EnhancedPhysicController : MonoBehaviour
             globalMomentumModifiers[i].Apply(ref momentum);
 
         for (int i = 0; i < velocityModifiers.Length; ++i)
-            velocityModifiers[i].Apply(velocity);
+            velocityModifiers[i].Apply(ref velocity);
 
         rigidbody.velocity = velocity + momentum;
     }
@@ -72,6 +73,8 @@ public class EnhancedPhysicController : MonoBehaviour
         horizontalMomentumModifiers = new MomentumModifier[0];
         globalMomentumModifiers = new MomentumModifier[0];
 
-        velocityModifiers = new VelocityModifier[0];
+        velocityModifiers = GetComponents<VelocityModifier>();
     }
+
+    public bool IsGrounded() { return groundChecker.IsGrounded(); }
 }
