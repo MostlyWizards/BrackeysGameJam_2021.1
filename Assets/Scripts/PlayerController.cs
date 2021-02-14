@@ -27,7 +27,7 @@ public class PlayerController : MonoBehaviour
         movementsInputs["MoveForward"].performed += OnMoveForward;
         movementsInputs["MoveRight"].performed += OnMoveRight;
         movementsInputs["Jump"].performed += OnJump;
-        //movementsInputs["LookAt"].performed += OnLookAt;
+        movementsInputs["LookAt"].performed += OnLookAt;
         //movementsInputs["LookAt"].canceled += OnStopLookAt;
     }
 
@@ -62,6 +62,8 @@ public class PlayerController : MonoBehaviour
         //Ajust axis values using look speed and Time.deltaTime so the look doesn't go faster if there is more FPS
         cameraController.m_XAxis.Value += lookMovement.x * 10 * Time.deltaTime;
         //cameraController.m_YAxis.Value += lookMovement.y * Time.deltaTime;
+
+        walking.RotateY(Camera.main.transform.rotation.y);
     }
     void OnStopLookAt(InputAction.CallbackContext context)
     {

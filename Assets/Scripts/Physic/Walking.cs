@@ -1,5 +1,6 @@
 using UnityEngine;
 using Unity.Mathematics;
+using UnityEngine.InputSystem;
 
 public class Walking : VelocityModifier
 {
@@ -27,6 +28,13 @@ public class Walking : VelocityModifier
             modelRoot.rotation = quaternion.LookRotation(velocity, transform.up);
             oldDirection = direction;
         }
+    }
+
+    public void RotateY(float angle)
+    {
+        var rotation = transform.rotation;
+        rotation.y = angle;
+        transform.rotation = rotation;
     }
 
     void OnDrawGizmos()
