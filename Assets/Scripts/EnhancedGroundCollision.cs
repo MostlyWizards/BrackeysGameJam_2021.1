@@ -11,17 +11,23 @@ public class EnhancedGroundCollision : MonoBehaviour
 
     // Internal
     float castLenght;
+    RaycastHit hit;
 
     void Start() {
         collider = GetComponent<Collider>();
-        castLenght = collider.bounds.max.y - collider.bounds.min.y / 2 + 0.0001f;
+        castLenght = (collider.bounds.max.y - collider.bounds.min.y) / 2 + 0.0001f;
     }
 
     void FixedUpdate() {
 
-        RaycastHit _hit;
-		isGrounded = Physics.Raycast(collider.bounds.center, -collider.transform.up, out _hit, castLenght);
+		isGrounded = Physics.Raycast(collider.bounds.center, -collider.transform.up, out hit, castLenght);
     }
 
     public bool IsGrounded() { return isGrounded; }
+
+    void OnDrawGizmos()
+    {
+        if (isGrounded)
+            Gizmos.DrawLine(transform.position, hit.point);
+    }
 }

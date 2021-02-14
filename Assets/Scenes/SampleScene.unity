@@ -341,8 +341,8 @@ MonoBehaviour:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
-  jumpSpeedMax: 10
-  risingTime: 2
+  jumpSpeedMax: 5
+  risingTime: 1
 --- !u!1 &633147372
 GameObject:
   m_ObjectHideFlags: 0

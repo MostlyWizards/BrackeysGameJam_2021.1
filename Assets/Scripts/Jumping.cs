@@ -31,7 +31,6 @@ public class Jumping : MomentumModifier
     void Start()
     {
         fixedAccStep = Mathf.Lerp(0, risingTime, Time.fixedDeltaTime);
-        Jump();
     }
 
     void FixedUpdate()
