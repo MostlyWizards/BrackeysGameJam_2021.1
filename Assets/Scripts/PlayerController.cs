@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
@@ -15,6 +16,9 @@ public class PlayerController : MonoBehaviour
     // Parameters
     public InputActionAsset inputs;
     public CinemachineFreeLook cameraController;
+
+    // Internal
+    List<System.Action> onJumpActions = new List<System.Action>();
 
     void Start()
     {
@@ -48,6 +52,8 @@ public class PlayerController : MonoBehaviour
     void OnJump(InputAction.CallbackContext context)
     {
         jumping.Jump();
+        foreach (var action in onJumpActions)
+            action();
     }
 
     void OnLookAt(InputAction.CallbackContext context)
@@ -55,7 +61,6 @@ public class PlayerController : MonoBehaviour
         //Normalize the vector to have an uniform vector in whichever form it came from (I.E Gamepad, mouse, etc)
         Vector2 lookMovement = context.ReadValue<Vector2>().normalized;
 
-        Debug.Log(cameraController.LookAt.forward);
         // This is because X axis is only contains between -180 and 180 instead of 0 and 1 like the Y axis
         //lookMovement.x = lookMovement.x * 180f; 
 
@@ -80,4 +85,7 @@ public class PlayerController : MonoBehaviour
     {
         return physicController.IsGrounded();
     }
+
+    public void AddJumpAction(System.Action action) { onJumpActions.Add(action); }
+    public void ClearJumpActions() { onJumpActions.Clear(); }
 }

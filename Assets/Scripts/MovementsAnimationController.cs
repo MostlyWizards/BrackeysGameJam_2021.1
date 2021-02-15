@@ -15,15 +15,24 @@ public class MovementsAnimationController : MonoBehaviour
     void Start()
     {
         controller = GetComponent<PlayerController>();
+        controller.AddJumpAction(OnJump);
     }
 
     // Update is called once per frame
-    void Update ()
+    void FixedUpdate ()
     {
 		//Get controller velocity;
 		Vector3 velocity = controller.GetVelocity();
 
 		animator.SetFloat("velocity", velocity.magnitude);
 		animator.SetBool("isGrounded", controller.IsGrounded());
+
+        animator.SetBool("isJumping", false);
 	}
+
+    void OnJump()
+    {
+        Debug.Log("Jump anim!");
+        animator.SetTrigger("jump");
+    }
 }
