@@ -77,4 +77,5 @@ public class EnhancedPhysicController : MonoBehaviour
     }
 
     public bool IsGrounded() { return groundChecker.IsGrounded(); }
+    public Vector3 GetVelocity() { return velocity; }
 }

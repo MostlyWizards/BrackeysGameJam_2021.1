@@ -70,4 +70,14 @@ public class PlayerController : MonoBehaviour
         //cameraController.m_XAxis.Value = 0;
         //cameraController.m_YAxis.Value = 0;
     }
+
+    public Vector3 GetVelocity()
+    {
+        return physicController.GetVelocity();
+    }
+
+    public bool IsGrounded()
+    {
+        return physicController.IsGrounded();
+    }
 }

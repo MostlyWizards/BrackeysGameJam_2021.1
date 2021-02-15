@@ -25,7 +25,15 @@ public class Walking : VelocityModifier
 
         if (direction.magnitude >= 0.1f && oldDirection != direction)
         {
-            modelRoot.rotation = quaternion.LookRotation(velocity, transform.up);
+            modelRoot.rotation = quaternion.LookRotation(velocity, new Vector3(0,1f,0));
+            
+            // Die mesh export :)
+            var rot = modelRoot.rotation;
+            var angles = rot.eulerAngles;
+            angles.y += 90;
+            rot.eulerAngles = angles;
+            modelRoot.rotation = rot;
+            
             oldDirection = direction;
         }
     }
