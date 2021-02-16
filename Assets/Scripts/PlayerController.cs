@@ -6,12 +6,14 @@ using UnityEngine.InputSystem;
 [RequireComponent(typeof(EnhancedPhysicController))]
 [RequireComponent(typeof(Walking))]
 [RequireComponent(typeof(Jumping))]
+[RequireComponent(typeof(Dashing))]
 public class PlayerController : MonoBehaviour
 {
     // Required components
     EnhancedPhysicController physicController;
     Walking walking;
     Jumping jumping;
+    Dashing dashing;
 
     // Parameters
     public InputActionAsset inputs;
@@ -19,12 +21,15 @@ public class PlayerController : MonoBehaviour
 
     // Internal
     List<System.Action> onJumpActions = new List<System.Action>();
+    List<System.Action> onDashActions = new List<System.Action>();
+
 
     void Start()
     {
         physicController = GetComponent<EnhancedPhysicController>();
         walking = GetComponent<Walking>();
         jumping = GetComponent<Jumping>();
+        dashing  = GetComponent<Dashing>();
 
         var movementsInputs = inputs.FindActionMap("Movements");
         movementsInputs.Enable();
@@ -33,12 +38,9 @@ public class PlayerController : MonoBehaviour
         movementsInputs["Jump"].performed += OnJump;
         movementsInputs["LookAt"].performed += OnLookAt;
         //movementsInputs["LookAt"].canceled += OnStopLookAt;
+        movementsInputs["Dash"].performed += OnDash;
     }
 
-    void Update()
-    {
-
-    }
     void OnMoveForward(InputAction.CallbackContext context)
     {
         walking.SetForwardIntensity(context.ReadValue<float>());
@@ -53,6 +55,13 @@ public class PlayerController : MonoBehaviour
     {
         jumping.Jump();
         foreach (var action in onJumpActions)
+            action();
+    }
+
+    void OnDash(InputAction.CallbackContext context)
+    {
+        dashing.Dash();
+        foreach (var action in onDashActions)
             action();
     }
 
@@ -88,4 +97,7 @@ public class PlayerController : MonoBehaviour
 
     public void AddJumpAction(System.Action action) { onJumpActions.Add(action); }
     public void ClearJumpActions() { onJumpActions.Clear(); }
+
+    public void AddDashAction(System.Action action) { onDashActions.Add(action); }
+    public void ClearDashActions() { onDashActions.Clear(); }
 }

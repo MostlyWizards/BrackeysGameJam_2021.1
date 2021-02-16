@@ -16,6 +16,7 @@ public class MovementsAnimationController : MonoBehaviour
     {
         controller = GetComponent<PlayerController>();
         controller.AddJumpAction(OnJump);
+        controller.AddDashAction(OnDash);
     }
 
     // Update is called once per frame
@@ -26,13 +27,15 @@ public class MovementsAnimationController : MonoBehaviour
 
 		animator.SetFloat("velocity", velocity.magnitude);
 		animator.SetBool("isGrounded", controller.IsGrounded());
-
-        animator.SetBool("isJumping", false);
 	}
 
     void OnJump()
     {
-        Debug.Log("Jump anim!");
         animator.SetTrigger("jump");
+    }
+
+    void OnDash()
+    {
+        animator.SetTrigger("dash");
     }
 }
