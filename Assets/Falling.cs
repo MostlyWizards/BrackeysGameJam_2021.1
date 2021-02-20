@@ -11,7 +11,7 @@ public class Falling : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        GetComponent<Collider>().enabled = false;
+        
     }
 
     // Update is called once per frame
@@ -20,7 +20,7 @@ public class Falling : MonoBehaviour
         for (int i = 0; i < requiredToDie.Length; ++i)
             if (requiredToDie[i] != null)
                 return;
-                
+        GetComponent<Collider>().enabled = false;       
         var pos = transform.position;
         pos.y -= speed * Time.fixedDeltaTime;
         transform.position = pos;
