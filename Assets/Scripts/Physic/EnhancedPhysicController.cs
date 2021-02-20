@@ -11,6 +11,7 @@ public class EnhancedPhysicController : MonoBehaviour
     EnhancedGroundCollision groundChecker;
 
     // Internal
+    Vector3 forward;
     Vector3 horizontalMomentum;
     Vector3 verticalMomentum;
     Vector3 velocity;
@@ -46,6 +47,7 @@ public class EnhancedPhysicController : MonoBehaviour
             velocityModifiers[i].Apply(ref velocity);
 
         rigidbody.velocity = velocity + momentum;
+        CheckForward();
     }
 
     void SetupRequiredComponents()
@@ -76,6 +78,14 @@ public class EnhancedPhysicController : MonoBehaviour
         velocityModifiers = GetComponents<VelocityModifier>();
     }
 
+    void CheckForward()
+    {
+        var direction = velocity.normalized;
+        if (direction.magnitude >= 0.1f && direction != forward)
+            forward = direction;
+    }
+
     public bool IsGrounded() { return groundChecker.IsGrounded(); }
     public Vector3 GetVelocity() { return velocity; }
+    public Vector3 GetForward() { return forward; }
 }

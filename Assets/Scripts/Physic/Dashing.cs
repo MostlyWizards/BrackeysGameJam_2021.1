@@ -10,6 +10,7 @@ public class Dashing : MomentumModifier
     public AnimationCurve accCurv;
     public float dashSpeedMax;
     public float impulseTime;
+    public float cooldown;
 
     // Internal
     bool isDashing;
@@ -17,6 +18,7 @@ public class Dashing : MomentumModifier
     float currentTimer;
     float fixedAccStep;
     float currentAcc;
+    float currentCooldown;
 
     public override E_MomentumAxis GetMomentumAxis() { return E_MomentumAxis.Vertical; }
 
@@ -24,19 +26,19 @@ public class Dashing : MomentumModifier
     {
         if (!isDashing)
             return;
-        momentum = VectorMath.RemoveDotVector(momentum, transform.forward);
-		momentum += transform.forward * currentDashSpeed;
-
-        Debug.Log(currentDashSpeed);
+        momentum = VectorMath.RemoveDotVector(momentum, physicController.GetForward());
+		momentum += physicController.GetForward() * currentDashSpeed;
     }
 
     void Start()
     {
+        physicController = GetComponent<EnhancedPhysicController>();
         fixedAccStep = Mathf.Lerp(0, impulseTime, Time.fixedDeltaTime);
     }
 
     void FixedUpdate()
     {
+        currentCooldown -= Time.fixedDeltaTime;
         if (!isDashing)
             return;
 
@@ -49,15 +51,18 @@ public class Dashing : MomentumModifier
             isDashing = false;
     }
 
-    public void Dash()
+    public bool Dash()
     {
-        if (isDashing)
-            return;
+        if (isDashing || currentCooldown >= 0)
+            return false;
 
-        Debug.Log("Dash!");
         isDashing = true;
         currentTimer = 0;
         currentAcc = 0;
         currentDashSpeed = 0;
+        currentCooldown = cooldown;
+        return true;
     }
+
+    public float GetRemainingCooldown() { return currentCooldown; }
 }

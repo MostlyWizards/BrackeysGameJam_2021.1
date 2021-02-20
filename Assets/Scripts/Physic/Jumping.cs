@@ -30,6 +30,7 @@ public class Jumping : MomentumModifier
 
     void Start()
     {
+        physicController = GetComponent<EnhancedPhysicController>();
         fixedAccStep = Mathf.Lerp(0, risingTime, Time.fixedDeltaTime);
     }
 
@@ -47,14 +48,15 @@ public class Jumping : MomentumModifier
             isJumping = false;
     }
 
-    public void Jump()
+    public bool Jump()
     {
-        if (isJumping)
-            return;
+        if (isJumping || !physicController.IsGrounded())
+            return false;
 
         isJumping = true;
         currentTimer = 0;
         currentAcc = 0;
         currentJumpSpeed = 0;
+        return true;
     }
 }

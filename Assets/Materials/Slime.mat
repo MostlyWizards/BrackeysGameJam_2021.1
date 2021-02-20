@@ -37,5 +37,5 @@ Material:
     - Vector1_9b856f0e29b94ec18d1a4748cd2ef043: 5
     m_Colors:
     - Color_45830b6274644b1689f9ea7a3df47392: {r: 0.0047169924, g: 0.6170626, b: 1, a: 0}
-    - Color_b546cb363b1543db8c38b4368394f299: {r: 0.38959593, g: 0.8397098, b: 0.9716981, a: 0}
+    - Color_b546cb363b1543db8c38b4368394f299: {r: 0, g: 0.44783908, b: 1.3981318, a: 0}
   m_BuildTextureStacks: []

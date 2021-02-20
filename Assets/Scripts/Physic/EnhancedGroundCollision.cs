@@ -20,7 +20,12 @@ public class EnhancedGroundCollision : MonoBehaviour
 
     void FixedUpdate() {
 
-		isGrounded = Physics.Raycast(collider.bounds.center, -collider.transform.up, out hit, castLenght);
+        castLenght = (collider.bounds.max.y - collider.bounds.min.y) / 2 + 0.0001f;
+		isGrounded = Physics.Raycast(collider.bounds.center, -collider.transform.up, out hit, castLenght, 1)
+        || Physics.Raycast(collider.bounds.center + collider.transform.forward, -collider.transform.up, out hit, castLenght, 1)
+        || Physics.Raycast(collider.bounds.center - collider.transform.forward, -collider.transform.up, out hit, castLenght, 1)
+        || Physics.Raycast(collider.bounds.center + collider.transform.right, -collider.transform.up, out hit, castLenght, 1)
+        || Physics.Raycast(collider.bounds.center - collider.transform.right, -collider.transform.up, out hit, castLenght, 1);
     }
 
     public bool IsGrounded() { return isGrounded; }

@@ -4,15 +4,22 @@ using UnityEngine.InputSystem;
 
 public class Walking : VelocityModifier
 {
+    // Required Components
+    EnhancedPhysicController physicController;
+
     // Parameters
     public float speed;
 
     public Transform modelRoot;
 
     // Internal
-    Vector2 oldDirection;
+    Vector3 oldForward;
     Vector2 direction;
 
+    void Start()
+    {
+        physicController = GetComponent<EnhancedPhysicController>();
+    }
     public void SetForwardIntensity(float intensity) { direction.x = intensity; direction.Normalize(); }
     public void SetRightIntensity(float intensity) { direction.y = intensity; direction.Normalize(); }
     public override void Apply(ref Vector3 velocity) {
@@ -22,10 +29,14 @@ public class Walking : VelocityModifier
 
         velocity.x = ((forward.x * direction.x) + (right.x * direction.y)) * speed * Time.fixedDeltaTime;
         velocity.z = ((forward.z * direction.x) + (right.z * direction.y)) * speed * Time.fixedDeltaTime;
+    }
 
-        if (direction.magnitude >= 0.1f && oldDirection != direction)
+    void FixedUpdate()
+    {
+        var forward = physicController.GetForward();
+        if (forward != oldForward)
         {
-            modelRoot.rotation = quaternion.LookRotation(velocity, new Vector3(0,1f,0));
+            modelRoot.rotation = quaternion.LookRotation(forward, transform.up);
             
             // Die mesh export :)
             var rot = modelRoot.rotation;
@@ -34,7 +45,7 @@ public class Walking : VelocityModifier
             rot.eulerAngles = angles;
             modelRoot.rotation = rot;
             
-            oldDirection = direction;
+            oldForward = forward;
         }
     }
 

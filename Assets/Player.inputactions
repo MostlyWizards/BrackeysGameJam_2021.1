@@ -158,6 +158,33 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "SlimeActions",
+            "id": "23c3f32c-df80-463a-9568-c9fa3022be56",
+            "actions": [
+                {
+                    "name": "LaunchSlime",
+                    "type": "Button",
+                    "id": "6525b595-ded2-480e-ac8f-14f0a8ac8529",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "33a0d97a-9b79-4aa5-be28-769e1675885b",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "LaunchSlime",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

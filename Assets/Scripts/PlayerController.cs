@@ -18,6 +18,9 @@ public class PlayerController : MonoBehaviour
     // Parameters
     public InputActionAsset inputs;
     public CinemachineFreeLook cameraController;
+    public AudioSource audioSource;
+    public AudioClip jumpSound;
+    public AudioClip dashSound;
 
     // Internal
     List<System.Action> onJumpActions = new List<System.Action>();
@@ -39,6 +42,26 @@ public class PlayerController : MonoBehaviour
         movementsInputs["LookAt"].performed += OnLookAt;
         //movementsInputs["LookAt"].canceled += OnStopLookAt;
         movementsInputs["Dash"].performed += OnDash;
+
+        onJumpActions.Add(() => { audioSource.clip = jumpSound; audioSource.Play(); });
+        onDashActions.Add(() => { audioSource.clip = dashSound; audioSource.Play(); });
+    }
+
+    void Stop()
+    {
+        var movementsInputs = inputs.FindActionMap("Movements");
+        movementsInputs.Disable();
+        movementsInputs["MoveForward"].performed -= OnMoveForward;
+        movementsInputs["MoveRight"].performed -= OnMoveRight;
+        movementsInputs["Jump"].performed -= OnJump;
+        movementsInputs["LookAt"].performed -= OnLookAt;
+        //movementsInputs["LookAt"].canceled += OnStopLookAt;
+        movementsInputs["Dash"].performed -= OnDash;
+    }
+
+    void FixedUpdate()
+    {
+
     }
 
     void OnMoveForward(InputAction.CallbackContext context)
@@ -53,16 +76,16 @@ public class PlayerController : MonoBehaviour
 
     void OnJump(InputAction.CallbackContext context)
     {
-        jumping.Jump();
-        foreach (var action in onJumpActions)
-            action();
+        if (jumping.Jump())
+            foreach (var action in onJumpActions)
+                action();
     }
 
     void OnDash(InputAction.CallbackContext context)
     {
-        dashing.Dash();
-        foreach (var action in onDashActions)
-            action();
+        if (dashing.Dash())
+            foreach (var action in onDashActions)
+                action();
     }
 
     void OnLookAt(InputAction.CallbackContext context)
@@ -74,10 +97,13 @@ public class PlayerController : MonoBehaviour
         //lookMovement.x = lookMovement.x * 180f; 
 
         //Ajust axis values using look speed and Time.deltaTime so the look doesn't go faster if there is more FPS
-        cameraController.m_XAxis.Value += lookMovement.x * 10 * Time.deltaTime;
+        cameraController.m_XAxis.Value += lookMovement.x * 100 * Time.deltaTime;
         //cameraController.m_YAxis.Value += lookMovement.y * Time.deltaTime;
 
-        walking.RotateY(Camera.main.transform.rotation.y);
+        //walking.RotateY(Camera.main.transform.rotation.y);
+        var rot = transform.rotation.eulerAngles;
+        rot.y = Camera.main.transform.rotation.eulerAngles.y;
+        transform.rotation= Quaternion.Euler(rot);
     }
     void OnStopLookAt(InputAction.CallbackContext context)
     {
