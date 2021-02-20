@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cinemachine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 [RequireComponent(typeof(EnhancedPhysicController))]
 [RequireComponent(typeof(Walking))]
@@ -21,6 +22,7 @@ public class PlayerController : MonoBehaviour
     public AudioSource audioSource;
     public AudioClip jumpSound;
     public AudioClip dashSound;
+    public Slider cameraSpeed;
 
     // Internal
     List<System.Action> onJumpActions = new List<System.Action>();
@@ -97,7 +99,7 @@ public class PlayerController : MonoBehaviour
         //lookMovement.x = lookMovement.x * 180f; 
 
         //Ajust axis values using look speed and Time.deltaTime so the look doesn't go faster if there is more FPS
-        cameraController.m_XAxis.Value += lookMovement.x * 100 * Time.deltaTime;
+        cameraController.m_XAxis.Value += lookMovement.x * cameraSpeed.value * Time.deltaTime;
         //cameraController.m_YAxis.Value += lookMovement.y * Time.deltaTime;
 
         //walking.RotateY(Camera.main.transform.rotation.y);
