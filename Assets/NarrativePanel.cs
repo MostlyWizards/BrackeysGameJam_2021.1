@@ -20,8 +20,8 @@ public class NarrativePanel : MonoBehaviour
     bool closed;
     string[] toDisplay = {
         "12 November 2033\nExperiment 42 : begining.",
-        "Okay let's do the usual, try to do that thing eat some of the other slimes and launch them back to the guard in the corner.",
-        "Nice job there!\n Wait... it looks like that did too much damage, the guard got destroyed and the gate is now open.\n This is the end of the experiment, put it back into the box.",
+        "Okay let's do the usual, try to do that slime eat some of the other slimes and throw them to the guard in the corner.",
+        "Nice job there!\n Wait... it looks like it did too much damage, the guard got destroyed and the gate is now open !\n This is the end of the experiment, put it back into its box.",
         "What are you...\nThe slime is acting on his own ??\nFor god sake, bring more guards !",
         "That doesn't look good, let's hope it's too stupid to climb some plateforms.",
         "MAXIMUN SECURITY NOW !!!\nCLOSE THE PORTAL !!!",

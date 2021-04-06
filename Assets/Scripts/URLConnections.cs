@@ -18,7 +18,7 @@ public class URLConnections : MonoBehaviour
 
     public void GoToTwitter()
     {
-        Application.OpenURL("https://twitter.com/MostlyWizards");
+        Application.OpenURL("https://twitter.com/StudioMostly");
     }
 
     public void GoToInstagram()

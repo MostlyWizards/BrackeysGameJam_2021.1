@@ -14,27 +14,25 @@ public class SlimePlayer : Damageable
     public AudioClip launchSlimeSound;
     public Slider healthUI;
     public Slider slimeStockUI;
-    public TMPro.TextMeshProUGUI dashCdUI;
-    public Image dashUI;
 
 
     // Internal
     int slimeStock;
     AudioSource audioSource;
     InvuDamage damaged;
-    Dashing dashing;
     EnhancedPhysicController physicController;
 
 
     void Start()
     {
+        Cursor.lockState = CursorLockMode.Locked;
+        
         slimeStock = 0;
         currentLife = initialLife;
         healthUI.maxValue = initialLife;
         slimeStockUI.maxValue = 5;
         audioSource = GetComponent<AudioSource>();
         damaged = GetComponent<InvuDamage>();
-        dashing = GetComponent<Dashing>();
         physicController = GetComponent<EnhancedPhysicController>();
         RefreshScale();
         var movementsInputs = inputs.FindActionMap("SlimeActions");
@@ -43,21 +41,6 @@ public class SlimePlayer : Damageable
 
         slimeStockUI.value = slimeStock;
         healthUI.value = currentLife;
-    }
-
-    void FixedUpdate()
-    {
-        float dashCd = dashing.GetRemainingCooldown();
-        if (dashCd > 0)
-        {
-            dashCdUI.text = dashCd.ToString("0.0");
-            dashUI.color = Color.white;
-        }
-        else
-        {
-            dashCdUI.text = "";
-            dashUI.color = Color.blue;
-        }
     }
 
     void OnCollisionEnter(Collision collision)

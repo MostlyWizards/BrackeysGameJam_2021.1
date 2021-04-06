@@ -33,7 +33,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Floats:
     - Vector1_1abaf30046934593b4d8303f4f2d9547: 15
-    - Vector1_37e4a2e4b09144b585f4fc88eb56a989: 7
+    - Vector1_37e4a2e4b09144b585f4fc88eb56a989: 100
     - Vector1_9b856f0e29b94ec18d1a4748cd2ef043: 2
     m_Colors:
     - Color_45830b6274644b1689f9ea7a3df47392: {r: 1, g: 0.7646003, b: 0, a: 0}

@@ -30,7 +30,8 @@ public class ActiveOnDestroy : MonoBehaviour
             }
             if (check)
                 for (int j = 0; j < datas[i].toActivate.Length; ++j)
-                    datas[i].toActivate[j].SetActive(true);
+                    if (datas[i].toActivate[j])
+                        datas[i].toActivate[j].SetActive(true);
         }
     }
 }
